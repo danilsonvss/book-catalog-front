@@ -1,38 +1,57 @@
-.App {
-  text-align: center;
+.bg-dark-2 {
+  background-color: rgb(49, 53, 59);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.swal2-styled.swal2-confirm {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+  ;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container {
+  overflow-y: auto;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.scroll-y {
+  overflow-y: auto;
+}
+
+.scroll-off {
+  overflow-y: hidden;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.appbar-action {
+  width: 50px;
+}
+
+.row-flex {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: wrap;
 }
 
-.App-link {
-  color: #61dafb;
+.form-control,
+.btn,
+button,
+input {
+  border-radius: 10px;
+  padding: 0.9rem !important;
+  border: 0 !important;
+  box-shadow: 0 !important;
+  outline: none !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-control,
+input {
+  border: 2px solid #ffffff !important;
+}
+
+.form-control:focus,
+.btn:focus,
+input:focus {
+  box-shadow: none !important;
+  border-color: #0d6efd !important;
 }

@@ -1,25 +1,67 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'sweetalert2/dist/sweetalert2.min.css'
 import './App.css';
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
+import api from "./api";
+import Login from './components/Login';
+import Books from './components/Books';
+import {useHistory} from 'react-router';
+
+const UserContext = React.createContext({
+    id: 0,
+    name: 'Guest',
+    email: 'guest@example.com'
+});
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const history = useHistory();
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        async function getUser() {
+            try {
+                const res = await api.get('/user');
+    
+                if (res.data.email !== undefined) {
+                    setUser(res.data);
+                    history.push('/books');
+                } else {
+                    history.push('/');
+                }
+            } catch (err) {
+                
+            }
+        }
+
+        getUser();
+    }, [history]);
+
+    return (
+        <Router>
+            <div className="scroll-y position-absolute h-100 w-100 bg-dark">
+                <UserContext.Provider value={user}>
+                    <Switch>
+                        <Route exact path="/">
+                            <Login />
+                        </Route>
+                        <Route path="/login">
+                            <Login />
+                        </Route>
+                        <Route path="/books">
+                            <Books />
+                        </Route>
+                    </Switch>
+                </UserContext.Provider>
+            </div>
+        </Router>
+    );
 }
 
+export {UserContext};
 export default App;
