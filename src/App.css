@@ -1,5 +1,5 @@
 .bg-dark-2 {
-  background-color: rgb(49, 53, 59);
+  background-color: rgb(51, 55, 61);
 }
 
 .swal2-styled.swal2-confirm {
@@ -17,7 +17,7 @@
 }
 
 .scroll-off {
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .navbar a {
@@ -37,8 +37,7 @@
 .btn,
 button,
 input {
-  border-radius: 10px;
-  padding: 0.9rem !important;
+  border-radius: 5px;
   border: 0 !important;
   box-shadow: 0 !important;
   outline: none !important;
@@ -54,4 +53,9 @@ input {
 input:focus {
   box-shadow: none !important;
   border-color: #0d6efd !important;
+}
+
+.btn, button {
+  text-transform: uppercase;
+  font-size: 0.8em;
 }

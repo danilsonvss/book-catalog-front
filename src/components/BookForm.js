@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import * as moment from 'moment';
 import api from "../api";
 import { useHistory, useParams } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function BookForm() {
     const { id } = useParams();
@@ -52,7 +54,7 @@ export default function BookForm() {
                 res = await api.put(`books/${id}`, data);
             } else {
                 res = await api.post('books', data);
-            } 
+            }
 
             if (res.data.success === true) {
                 history.push("/books");
@@ -82,17 +84,21 @@ export default function BookForm() {
             throw new Error('Informe o número de páginas');
         }
 
-        if (!moment(registrationDate).isValid() 
+        if (!moment(registrationDate).isValid()
             || !moment(registrationDate).isValid()) {
             throw new Error('Informe uma data válida');
         }
-    }    
+    }
+
+    function handleBack() {
+        history.push(`/books`);
+    }
 
     useEffect(() => {
         async function getBook() {
             try {
                 const res = await api.get(`books/${id}`);
-    
+
                 if (res.data.author) {
                     setTitle(res.data.title);
                     setAuthor(res.data.author);
@@ -114,14 +120,25 @@ export default function BookForm() {
         <Form>
             <Card className="bg-dark-2 text-white">
                 <Card.Header className="p-3">
-                    <h5 className="m-0">Cadastrar livro</h5>
+                    <div className="navbar h-auto p-0">
+                        <div>
+                            <h5 className="m-0">Cadastrar livro</h5>
+                        </div>
+                        <div>
+                            <Button variant="dark"
+                                onClick={handleBack}
+                            >
+                                <FontAwesomeIcon icon={faArrowLeft} /> Voltar
+                            </Button>
+                        </div>
+                    </div>
                 </Card.Header>
                 <Card.Body>
                     <Row>
                         <Col md={6}>
                             <Form.Group className="mb-3">
                                 <Form.Label>Título</Form.Label>
-                                <Form.Control 
+                                <Form.Control
                                     defaultValue={title}
                                     className="p-2"
                                     type="text"
@@ -132,7 +149,7 @@ export default function BookForm() {
                         <Col md={6}>
                             <Form.Group className="mb-3">
                                 <Form.Label>Autor</Form.Label>
-                                <Form.Control 
+                                <Form.Control
                                     defaultValue={author}
                                     className="p-2"
                                     type="text"
@@ -154,7 +171,7 @@ export default function BookForm() {
                         <Col md={6}>
                             <Form.Group className="mb-3">
                                 <Form.Label>Número de páginas</Form.Label>
-                                <Form.Control 
+                                <Form.Control
                                     defaultValue={pages}
                                     className="p-2"
                                     type="number"
@@ -165,7 +182,7 @@ export default function BookForm() {
                         <Col md={6}>
                             <Form.Group className="mb-3">
                                 <Form.Label>Data de cadastro</Form.Label>
-                                <Form.Control 
+                                <Form.Control
                                     defaultValue={registrationDate}
                                     className="p-2"
                                     type="date"
@@ -176,8 +193,8 @@ export default function BookForm() {
                     </Row>
                 </Card.Body>
                 <Card.Footer className="p-3">
-                    <Button variant="primary" 
-                        className="text-uppercase" 
+                    <Button variant="primary"
+                        className="text-uppercase"
                         type="button" onClick={handleSave}>
                         Salvar
                     </Button>
