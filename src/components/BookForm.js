@@ -118,7 +118,7 @@ export default function BookForm() {
 
     return (
         <Form>
-            <Card className="bg-dark-2 text-white">
+            <Card className="bg-dark-2 text-white shadow">
                 <Card.Header className="p-3">
                     <div className="navbar h-auto p-0">
                         <div>

@@ -78,10 +78,10 @@ export default function Weather() {
 
     return (
         (city ? (
-            <div className="bg-dark-2 p-3 rounded text-white mb-3" >
+            <div className="bg-primary p-3 rounded text-white mb-3" >
                 <small>
                     <h5 className="mb-1">{description}</h5>
-                    <div>{temp}&deg;C {dayOfWeek} - {city}</div>
+                    <div>{temp}&deg;C {dayOfWeek}. - {city}</div>
                 </small>
             </div>
         ) : null

@@ -88,6 +88,8 @@ export default function Books() {
 function BookList() {
     const history = useHistory();
     const [bookList, setBookList] = useState([]);
+    const [perPage, setPerPage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(null);
     const [prevPageUrl, setPrevPageUrl] = useState(null);
     const [nextPageUrl, setNextPageUrl] = useState(null);
     const [params, setParams] = useState(false);
@@ -100,12 +102,16 @@ function BookList() {
 
             const {
                 data,
+                per_page,
+                current_page,
                 prev_page_url,
                 next_page_url
             } = res.data;
 
             if (data !== undefined) {
                 setBookList(data);
+                setPerPage(per_page);
+                setCurrentPage(current_page);
                 setPrevPageUrl(prev_page_url);
                 setNextPageUrl(next_page_url);
             } else {
@@ -203,11 +209,14 @@ function BookList() {
         return (
             <React.Fragment>
                 {nextPageUrl || prevPageUrl ? (
-                    <div className="d-flex bg-dark-2 rounded p-2">
-                        <Button onClick={handleFirstPage} className="me-3">
-                            <FontAwesomeIcon icon={faHome} />
-                        </Button>
+                    <div className="d-flex bg-dark-2 rounded p-2 align-items-center">
+                        <span className="text-white">
+                            Página atual {currentPage}, exibindo {perPage} livros
+                        </span>
                         <ButtonGroup className="ms-auto">
+                            <Button onClick={handleFirstPage}>
+                                <FontAwesomeIcon icon={faHome} />
+                            </Button>
                             {prevPageUrl ? (
                                 <Button onClick={handlePrevPage}>
                                     <FontAwesomeIcon icon={faArrowLeft} />
@@ -271,11 +280,16 @@ function BookList() {
                 ))}
             </Row>
         ) : (
-            <div className="text-white text-center p-3">
-                <div className="p-3">Nenhum livro cadastrado</div>
-                <Button variant="primary"
-                    onClick={() => history.push("/books/new")}>Cadastrar um livro</Button>
-            </div>
+            <Row>
+                <Col sm={8} md={6} lg={4} className="m-auto">
+                    <div className="bg-dark-2 shadow rounded text-white text-center p-3">
+                        <div className="p-3">Nenhum livro encontrado.</div>
+                        <Button variant="primary"
+                            className="p-3 w-100"
+                            onClick={() => history.push("/books/new")}>Cadastrar um livro</Button>
+                    </div>
+                </Col>
+            </Row>
         )
     );
 }
