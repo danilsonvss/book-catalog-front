@@ -3,6 +3,8 @@ import Swal from "sweetalert2";
 import api from "../api";
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
+import { faThermometerQuarter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Weather() {
     const [city, setCity] = useState('');
@@ -47,7 +49,7 @@ export default function Weather() {
                         city
                     });
                 }
-            })()
+            })();
         }
 
         getLocation();
@@ -78,11 +80,14 @@ export default function Weather() {
 
     return (
         (city ? (
-            <div className="bg-primary p-3 rounded text-white mb-3" >
-                <small>
+            <div className="d-flex align-items-center bg-primary p-3 rounded text-white mb-3" >
+                <div className="h1 mb-0 me-3">
+                    <FontAwesomeIcon icon={faThermometerQuarter} />
+                </div>
+                <div className="small">
                     <h5 className="mb-1">{description}</h5>
                     <div>{temp}&deg;C {dayOfWeek}. - {city}</div>
-                </small>
+                </div>
             </div>
         ) : null
         )

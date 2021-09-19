@@ -117,89 +117,93 @@ export default function BookForm() {
     }, [id]);
 
     return (
-        <Form>
-            <Card className="bg-dark-2 text-white shadow">
-                <Card.Header className="p-3">
-                    <div className="navbar h-auto p-0">
-                        <div>
-                            <h5 className="m-0">Cadastrar livro</h5>
-                        </div>
-                        <div>
-                            <Button variant="dark"
-                                onClick={handleBack}
-                            >
-                                <FontAwesomeIcon icon={faArrowLeft} /> Voltar
+        <Row>
+            <Col md={10} lg={8} className="m-auto">
+                <Form>
+                    <Card className="bg-dark-2 text-white shadow">
+                        <Card.Header className="p-3">
+                            <div className="navbar h-auto p-0">
+                                <div>
+                                    <h5 className="m-0">Cadastrar livro</h5>
+                                </div>
+                                <div>
+                                    <Button variant="dark"
+                                        onClick={handleBack}
+                                    >
+                                        <FontAwesomeIcon icon={faArrowLeft} /> Voltar
+                                    </Button>
+                                </div>
+                            </div>
+                        </Card.Header>
+                        <Card.Body>
+                            <Row>
+                                <Col md={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Título</Form.Label>
+                                        <Form.Control
+                                            defaultValue={title}
+                                            className="p-2"
+                                            type="text"
+                                            placeholder="Título do livro"
+                                            onChange={handleChangeTitle} />
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Autor</Form.Label>
+                                        <Form.Control
+                                            defaultValue={author}
+                                            className="p-2"
+                                            type="text"
+                                            placeholder="Autor do livro"
+                                            onChange={handleChangeAuthor} />
+                                    </Form.Group>
+                                </Col>
+                                <Col md={12}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Descrição</Form.Label>
+                                        <Form.Control as="textarea"
+                                            defaultValue={description}
+                                            className="p-2"
+                                            type="text"
+                                            placeholder="Descrição do livro"
+                                            onChange={handleChangeDescription} />
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Número de páginas</Form.Label>
+                                        <Form.Control
+                                            defaultValue={pages}
+                                            className="p-2"
+                                            type="number"
+                                            placeholder="Número de páginas"
+                                            onChange={handleChangePages} />
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Data de cadastro</Form.Label>
+                                        <Form.Control
+                                            defaultValue={registrationDate}
+                                            className="p-2"
+                                            type="date"
+                                            placeholder="Data de cadastro"
+                                            onChange={handleChangeRegistrationDate} />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Card.Body>
+                        <Card.Footer className="p-3">
+                            <Button variant="primary"
+                                className="text-uppercase"
+                                type="button" onClick={handleSave}>
+                                Salvar
                             </Button>
-                        </div>
-                    </div>
-                </Card.Header>
-                <Card.Body>
-                    <Row>
-                        <Col md={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Título</Form.Label>
-                                <Form.Control
-                                    defaultValue={title}
-                                    className="p-2"
-                                    type="text"
-                                    placeholder="Título do livro"
-                                    onChange={handleChangeTitle} />
-                            </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Autor</Form.Label>
-                                <Form.Control
-                                    defaultValue={author}
-                                    className="p-2"
-                                    type="text"
-                                    placeholder="Autor do livro"
-                                    onChange={handleChangeAuthor} />
-                            </Form.Group>
-                        </Col>
-                        <Col md={12}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Descrição</Form.Label>
-                                <Form.Control as="textarea"
-                                    defaultValue={description}
-                                    className="p-2"
-                                    type="text"
-                                    placeholder="Descrição do livro"
-                                    onChange={handleChangeDescription} />
-                            </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Número de páginas</Form.Label>
-                                <Form.Control
-                                    defaultValue={pages}
-                                    className="p-2"
-                                    type="number"
-                                    placeholder="Número de páginas"
-                                    onChange={handleChangePages} />
-                            </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Data de cadastro</Form.Label>
-                                <Form.Control
-                                    defaultValue={registrationDate}
-                                    className="p-2"
-                                    type="date"
-                                    placeholder="Data de cadastro"
-                                    onChange={handleChangeRegistrationDate} />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                </Card.Body>
-                <Card.Footer className="p-3">
-                    <Button variant="primary"
-                        className="text-uppercase"
-                        type="button" onClick={handleSave}>
-                        Salvar
-                    </Button>
-                </Card.Footer>
-            </Card>
-        </Form>
+                        </Card.Footer>
+                    </Card>
+                </Form>
+            </Col>
+        </Row>
     );
 }
