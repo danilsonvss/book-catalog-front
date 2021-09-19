@@ -36,10 +36,10 @@ export default function BookView(props) {
                     setPages(res.data.pages);
                     setRegistrationDate(res.data.registration_at);
                 } else {
-                    Swal.fire(res.data.message, '', 'error');
+                    throw new Error(res.data.message);
                 }
             } catch (err) {
-                Swal.fire(err, '', 'error');
+                Swal.fire('Atenção', err, 'error');
             }
         }
 

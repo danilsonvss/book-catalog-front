@@ -26,10 +26,10 @@ export default function Login({ user }) {
                 handleSaveToken(res.data.access_token);
                 history.push("/books");
             } else {
-                Swal.fire(res.data.message, '', 'error');
+                Swal.fire('Atenção', res.data.message, 'error');
             }
         } catch (err) {
-            Swal.fire(err, '', 'error');
+            Swal.fire('Atenção', 'Autenticação falhou', 'error');
         } finally {
             setLoading(false);
         }

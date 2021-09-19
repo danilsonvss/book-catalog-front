@@ -5,7 +5,7 @@ import api from '../api';
 import { getUrlParam } from '../utils';
 import { Route, Switch, useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { faArrowLeft, faArrowRight, faBookOpen, faHome, faPen, faPlusCircle, faPowerOff, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight, faBookOpen, faHome, faPen, faPlusCircle, faPowerOff, faSearch, faThermometerQuarter, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BookForm from './BookForm';
 import Weather from './Weather';
@@ -25,7 +25,7 @@ export default function Books() {
                 history.push('/');
             }
         } catch (err) {
-            Swal.fire(err, '', 'error');
+            Swal.fire('Atenção', err, 'error');
         }
     }
 
@@ -66,6 +66,7 @@ export default function Books() {
                 </Container>
             </Navbar>
             <Container className="mt-3">
+                <Weather />
                 <Switch>
                     <Route path="/books/new">
                         <BookForm />
@@ -149,9 +150,9 @@ function BookList() {
                     (async () => {
                         const res = await api.delete(`/books/${bookId}`);
                         if (res.data.success) {
-                            Swal.fire(res.data.message, '', 'success');
+                            Swal.fire('Informação', res.data.message, 'success');
                         } else {
-                            Swal.fire(res.data.message, '', 'error');
+                            Swal.fire('Atenção', res.data.message, 'error');
                         }
                     })();
 
@@ -240,7 +241,6 @@ function BookList() {
         bookList.length > 0 ? (
             <Row>
                 <Col md={12}>
-                    <Weather />
                     <div className="text-white align-space-beetwen">
                         <BookFilter />
                     </div>

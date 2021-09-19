@@ -58,26 +58,26 @@ export default function BookForm() {
 
             if (res.data.success === true) {
                 history.push("/books");
-                Swal.fire(res.data.message, '', 'success');
+                Swal.fire('Informação', res.data.message, 'success');
             } else {
-                Swal.fire(res.data.message, '', 'error');
+                throw new Error(res.data.message);
             }
         } catch (e) {
-            Swal.fire(e.message, '', 'error');
+            Swal.fire('Atenção', e.message, 'error');
         }
     }
 
     function handleValidate() {
         if (title.length < 1 || description.length > 255) {
-            throw new Error('Informe o título (1 a 255 caracteres)');
+            throw new Error('Informe o título de 1 a 255 caracteres');
         }
 
         if (author.length < 1 || description.length > 255) {
-            throw new Error('Informe o autor (1 a 255 caracteres)');
+            throw new Error('Informe o autor de 1 a 255 caracteres)');
         }
 
         if (description.length < 1 || description.length > 500) {
-            throw new Error('Informe o descrição (1 a 500 caracteres)');
+            throw new Error('Informe o descrição de 1 a 500 caracteres');
         }
 
         if (parseInt(pages) < 1) {
@@ -106,7 +106,7 @@ export default function BookForm() {
                     setPages(res.data.pages);
                     setRegistrationDate(res.data.registration_at);
                 } else {
-                    Swal.fire(res.data.message, '', 'error');
+                    Swal.fire('Atenção', res.data.message, 'error');
                 }
             } catch (err) {
                 Swal.fire(err, '', 'error');

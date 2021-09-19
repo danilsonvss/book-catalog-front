@@ -5,18 +5,20 @@ import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import { faThermometerQuarter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "react-bootstrap";
 
 export default function Weather() {
     const [city, setCity] = useState('');
     const [description, setDescription] = useState('');
     const [temp, setTemp] = useState('');
+    const [hideWeather, setHideWeather] = useState(false);
 
     const getWheaterInfo = useCallback(async () => {
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(setPosition);
             } else {
-                Swal.fire("Seu navegador não suporta geolocalização", '', 'error');
+                Swal.fire('Atenção', 'Seu navegador não suporta geolocalização', 'error');
             }
         }
 
@@ -79,7 +81,7 @@ export default function Weather() {
     const dayOfWeek = getDayOfWeek();
 
     return (
-        (city ? (
+        (city && !hideWeather ? (
             <div className="d-flex align-items-center bg-primary p-3 rounded text-white mb-3" >
                 <div className="h1 mb-0 me-3">
                     <FontAwesomeIcon icon={faThermometerQuarter} />
@@ -88,6 +90,11 @@ export default function Weather() {
                     <h5 className="mb-1">{description}</h5>
                     <div>{temp}&deg;C {dayOfWeek}. - {city}</div>
                 </div>
+                <Button variant="primary" 
+                    className="ms-auto"
+                    onClick={() => setHideWeather(true)}>
+                    Ocultar
+                </Button>
             </div>
         ) : null
         )
