@@ -3,9 +3,9 @@ import { Container, Button, Col, Card, Navbar, Nav, ButtonGroup, Row, FormContro
 import Swal from 'sweetalert2';
 import api from '../api';
 import { getUrlParam } from '../utils';
-import { Route, Switch, useHistory } from 'react-router';
+import { Route, Switch, useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { faArrowLeft, faArrowRight, faBookOpen, faHome, faPen, faPlusCircle, faPowerOff, faSearch, faThermometerQuarter, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight, faBookOpen, faHome, faPen, faPlusCircle, faPowerOff, faSearch, faThermometerQuarter, faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BookForm from './BookForm';
 import Weather from './Weather';
@@ -165,13 +165,49 @@ function BookList() {
     }
 
     function BookFilter() {
+        const [filter, setFilter] = useState('');
+
+        function handleChangeFilter(e) {
+            setFilter(e.target.value);
+        }
+
+        function handleFilter() {
+            if (filter === '') {
+                Swal.fire('Atenção', 'Filtro vazio', 'warning');
+                return;
+            }
+
+            setParams({
+                ...params,
+                filter
+            });
+        }
+
+        function handleClearFilter() {
+            setParams({
+                ...params,
+                filter: ''
+            });
+        }
+
         return (
             <InputGroup className="mb-3">
                 <FormControl
+                    defaultValue={filter}
+                    onChange={handleChangeFilter}
                     placeholder="Informe o Título, Descrição, Autor ou Data de Cadastro"
                     aria-label="Filtrar livros"
                 />
-                <Button variant="light" className="text-primary">
+                {filter ? (
+                    <Button variant="light"
+                        onClick={handleClearFilter}
+                        className="text-dark">
+                        <FontAwesomeIcon icon={faTimes} />
+                    </Button>
+                ) : null}
+                <Button variant="light"
+                    onClick={handleFilter}
+                    className="text-primary">
                     <FontAwesomeIcon icon={faSearch} />
                 </Button>
             </InputGroup>
@@ -185,8 +221,6 @@ function BookList() {
                 ...params,
                 page: 1
             });
-
-            getBookList();
         }
 
         function handlePrevPage() {
@@ -194,8 +228,6 @@ function BookList() {
                 ...params,
                 page: getUrlParam(prevPageUrl, 'page')
             });
-
-            getBookList();
         }
 
         function handleNextPage() {
@@ -203,16 +235,14 @@ function BookList() {
                 ...params,
                 page: getUrlParam(nextPageUrl, 'page')
             });
-
-            getBookList();
         }
 
         return (
             <React.Fragment>
                 {nextPageUrl || prevPageUrl ? (
                     <div className="d-flex bg-dark-2 rounded p-2 align-items-center">
-                        <span className="text-white">
-                            Página atual {currentPage}, exibindo {perPage} livros
+                        <span className="text-white small">
+                            Página {currentPage}, exibindo {perPage} livros
                         </span>
                         <ButtonGroup className="ms-auto">
                             <Button onClick={handleFirstPage}>
@@ -220,13 +250,13 @@ function BookList() {
                             </Button>
                             {prevPageUrl ? (
                                 <Button onClick={handlePrevPage}>
-                                    <FontAwesomeIcon icon={faArrowLeft} />
+                                    <FontAwesomeIcon icon={faArrowLeft} /> 
                                 </Button>
                             ) : null}
                             {nextPageUrl ? (
                                 <Button onClick={handleNextPage}>
-                                <FontAwesomeIcon icon={faArrowRight} />
-                            </Button>
+                                    <FontAwesomeIcon icon={faArrowRight} />
+                                </Button>
                             ) : null}
                         </ButtonGroup>
                     </div>
@@ -238,58 +268,58 @@ function BookList() {
     }
 
     return (
-        bookList.length > 0 ? (
-            <Row>
-                <Col md={12}>
-                    <div className="text-white align-space-beetwen">
-                        <BookFilter />
-                    </div>
-                </Col>
-                {nextPageUrl || prevPageUrl ? (
-                    <Col md={12} className="mb-3">
-                        <Pagination />
+        <React.Fragment>
+            <div className="text-white align-space-beetwen">
+                <BookFilter />
+            </div>
+            {bookList.length > 0 ? (
+                <Row>
+                    {nextPageUrl || prevPageUrl ? (
+                        <Col md={12} className="mb-3">
+                            <Pagination />
+                        </Col>
+                    ) : null}
+                    {bookList.map((book) => (
+                        <Col md={6} xl={4} key={book.id} className="d-flex mb-3 align-self-stretch">
+                            <Card className="h-100 d-flex justify-content-end border-0 shadow-sm bg-dark-2 text-white w-100">
+                                <Card.Header className="h-100">
+                                    <div><strong>{book.title}</strong></div>
+                                    <small>Autor: {book.author}</small>
+                                </Card.Header>
+                                <Card.Footer className="p-2">
+                                    <div className="w-100 d-flex">
+                                        <ButtonGroup className="ms-auto">
+                                            <Button variant="primary"
+                                                onClick={() => handleView(book.id)}>
+                                                <FontAwesomeIcon icon={faBookOpen} />
+                                            </Button>
+                                            <Button className="btn btn-dark"
+                                                onClick={() => handleEdit(book.id)}>
+                                                <FontAwesomeIcon icon={faPen} />
+                                            </Button>
+                                            <Button className="btn btn-dark"
+                                                onClick={() => handleDelete(book.id)}>
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </Button>
+                                        </ButtonGroup>
+                                    </div>
+                                </Card.Footer>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
+            ) : (
+                <Row>
+                    <Col sm={8} md={6} lg={4} className="m-auto">
+                        <div className="bg-dark-2 shadow rounded text-white text-center p-3">
+                            <div className="p-3">Nenhum livro encontrado.</div>
+                            <Button variant="primary"
+                                className="p-3 w-100"
+                                onClick={() => history.push("/books/new")}>Cadastrar um livro</Button>
+                        </div>
                     </Col>
-                ) : null}
-                {bookList.map((book) => (
-                    <Col md={6} xl={4} key={book.id} className="d-flex mb-3 align-self-stretch">
-                        <Card className="h-100 d-flex justify-content-end border-0 shadow-sm bg-dark-2 text-white w-100">
-                            <Card.Header className="h-100">
-                                <div><strong>{book.title}</strong></div>
-                                <small>Autor: {book.author}</small>
-                            </Card.Header>
-                            <Card.Footer className="p-2">
-                                <div className="w-100 d-flex">
-                                    <ButtonGroup className="ms-auto">
-                                        <Button variant="primary"
-                                            onClick={() => handleView(book.id)}>
-                                            <FontAwesomeIcon icon={faBookOpen} />
-                                        </Button>
-                                        <Button className="btn btn-dark"
-                                            onClick={() => handleEdit(book.id)}>
-                                            <FontAwesomeIcon icon={faPen} />
-                                        </Button>
-                                        <Button className="btn btn-dark"
-                                            onClick={() => handleDelete(book.id)}>
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </Button>
-                                    </ButtonGroup>
-                                </div>
-                            </Card.Footer>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-        ) : (
-            <Row>
-                <Col sm={8} md={6} lg={4} className="m-auto">
-                    <div className="bg-dark-2 shadow rounded text-white text-center p-3">
-                        <div className="p-3">Nenhum livro encontrado.</div>
-                        <Button variant="primary"
-                            className="p-3 w-100"
-                            onClick={() => history.push("/books/new")}>Cadastrar um livro</Button>
-                    </div>
-                </Col>
-            </Row>
-        )
+                </Row>
+            )}
+        </React.Fragment>
     );
 }
