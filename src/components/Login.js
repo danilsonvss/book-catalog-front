@@ -4,7 +4,7 @@ import api from '../api';
 import Swal from 'sweetalert2'
 import { useHistory } from 'react-router';
 
-export default function Login({ user }) {
+export default function Login() {
     const history = useHistory();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -24,7 +24,7 @@ export default function Login({ user }) {
 
             if (res.data.success === true) {
                 handleSaveToken(res.data.access_token);
-                history.push("/books");
+                window.location.reload();
             } else {
                 Swal.fire('Atenção', res.data.message, 'error');
             }
@@ -49,7 +49,7 @@ export default function Login({ user }) {
                 const token = localStorage.getItem('token');
     
                 if (token !== null) {
-                    history.push('/books');
+                    history.replace('/books');
                 }
             } catch (err) {
                 

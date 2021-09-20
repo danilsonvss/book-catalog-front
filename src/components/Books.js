@@ -3,9 +3,9 @@ import { Container, Button, Col, Card, Navbar, Nav, ButtonGroup, Row, FormContro
 import Swal from 'sweetalert2';
 import api from '../api';
 import { getUrlParam } from '../utils';
-import { Route, Switch, useHistory, useParams } from 'react-router';
+import { Route, Switch, useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { faArrowLeft, faArrowRight, faBookOpen, faHome, faPen, faPlusCircle, faPowerOff, faSearch, faThermometerQuarter, faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight, faBookOpen, faHome, faPen, faPlusCircle, faPowerOff, faSearch, faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BookForm from './BookForm';
 import Weather from './Weather';
