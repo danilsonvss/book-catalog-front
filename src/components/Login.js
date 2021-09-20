@@ -68,7 +68,7 @@ export default function Login({ user }) {
                     <Form>
                         <Card className="shadow-sm bg-dark-2 rounded text-white">
                             <Card.Body>
-                                <h1 className="h3 p-3 text-center m-0">Login</h1>
+                                <h1 className="display-6 p-3 text-center m-0">Login</h1>
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                     <Form.Label>E-mail</Form.Label>
                                     <Form.Control 

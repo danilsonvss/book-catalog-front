@@ -42,7 +42,7 @@ export default function Books() {
                             src={bible}
                             width="40"
                             height="40"
-                            className="d-inline-block align-top me-3 rounded-circle"
+                            className="d-inline-block align-middle me-3 rounded-circle"
                             alt="React Bootstrap logo"
                         />
                         <Link to="/books" className="text-white align-middle">
@@ -94,6 +94,7 @@ function BookList() {
     const [prevPageUrl, setPrevPageUrl] = useState(null);
     const [nextPageUrl, setNextPageUrl] = useState(null);
     const [params, setParams] = useState(false);
+    const [filter, setFilter] = useState('');
 
     const getBookList = useCallback(async () => {
         try {
@@ -164,56 +165,6 @@ function BookList() {
         });
     }
 
-    function BookFilter() {
-        const [filter, setFilter] = useState('');
-
-        function handleChangeFilter(e) {
-            setFilter(e.target.value);
-        }
-
-        function handleFilter() {
-            if (filter === '') {
-                Swal.fire('Atenção', 'Filtro vazio', 'warning');
-                return;
-            }
-
-            setParams({
-                ...params,
-                filter
-            });
-        }
-
-        function handleClearFilter() {
-            setParams({
-                ...params,
-                filter: ''
-            });
-        }
-
-        return (
-            <InputGroup className="mb-3">
-                <FormControl
-                    defaultValue={filter}
-                    onChange={handleChangeFilter}
-                    placeholder="Informe o Título, Descrição, Autor ou Data de Cadastro"
-                    aria-label="Filtrar livros"
-                />
-                {filter ? (
-                    <Button variant="light"
-                        onClick={handleClearFilter}
-                        className="text-dark">
-                        <FontAwesomeIcon icon={faTimes} />
-                    </Button>
-                ) : null}
-                <Button variant="light"
-                    onClick={handleFilter}
-                    className="text-primary">
-                    <FontAwesomeIcon icon={faSearch} />
-                </Button>
-            </InputGroup>
-        );
-    }
-
     function Pagination() {
 
         function handleFirstPage() {
@@ -250,7 +201,7 @@ function BookList() {
                             </Button>
                             {prevPageUrl ? (
                                 <Button onClick={handlePrevPage}>
-                                    <FontAwesomeIcon icon={faArrowLeft} /> 
+                                    <FontAwesomeIcon icon={faArrowLeft} />
                                 </Button>
                             ) : null}
                             {nextPageUrl ? (
@@ -267,10 +218,50 @@ function BookList() {
         );
     }
 
+    function handleChangeFilter(e) {
+        setFilter(e.target.value);
+    }
+
+    function handleFilter() {
+        if (filter === '') {
+            Swal.fire('Atenção', 'Você precisa informar um termo para o filtro', 'warning');
+            return;
+        }
+
+        setParams({
+            ...params,
+            filter
+        });
+    }
+
+    function handleClearFilter() {
+        setFilter('');
+        setParams({});
+    }
+    
     return (
         <React.Fragment>
             <div className="text-white align-space-beetwen">
-                <BookFilter />
+                <InputGroup className="mb-3">
+                    <FormControl
+                        value={filter}
+                        onChange={handleChangeFilter}
+                        placeholder="Informe o Título, Descrição, Autor ou Data de Cadastro"
+                        aria-label="Filtrar livros"
+                    />
+                    {filter ? (
+                        <Button variant="light"
+                            onClick={handleClearFilter}
+                            className="text-dark">
+                            <FontAwesomeIcon icon={faTimes} />
+                        </Button>
+                    ) : null}
+                    <Button variant="light"
+                        onClick={handleFilter}
+                        className="text-primary">
+                        <FontAwesomeIcon icon={faSearch} />
+                    </Button>
+                </InputGroup>
             </div>
             {bookList.length > 0 ? (
                 <Row>
@@ -311,7 +302,10 @@ function BookList() {
             ) : (
                 <Row>
                     <Col sm={8} md={6} lg={4} className="m-auto">
-                        <div className="bg-dark-2 shadow rounded text-white text-center p-3">
+                        <div className="text-white text-center p-3">
+                            <div className="display-1">
+                                <FontAwesomeIcon icon={faBookOpen} />
+                            </div>
                             <div className="p-3">Nenhum livro encontrado.</div>
                             <Button variant="primary"
                                 className="p-3 w-100"

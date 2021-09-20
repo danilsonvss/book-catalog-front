@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500&display=swap');
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 400;
+}
+
 .bg-dark-2 {
   background-color: rgb(51, 55, 61);
 }
@@ -55,7 +62,9 @@ input:focus {
   border-color: #0d6efd !important;
 }
 
-.btn, button {
+.btn,
+button {
   text-transform: uppercase;
   font-size: 0.8em;
+  font-weight: 500;
 }
