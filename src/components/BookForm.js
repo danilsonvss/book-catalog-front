@@ -68,11 +68,11 @@ export default function BookForm() {
     }
 
     function handleValidate() {
-        if (title.length < 1 || description.length > 255) {
+        if (title.length < 1 || title.length > 255) {
             throw new Error('Informe o título de 1 a 255 caracteres');
         }
 
-        if (author.length < 1 || description.length > 255) {
+        if (author.length < 1 || author.length > 255) {
             throw new Error('Informe o autor de 1 a 255 caracteres)');
         }
 
