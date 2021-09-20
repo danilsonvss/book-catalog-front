@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import './bible.jpg';
@@ -13,10 +13,10 @@ import api from "./api";
 import Login from './components/Login';
 import Books from './components/Books';
 import { useHistory } from 'react-router';
-import Swal from 'sweetalert2';
 
 function App() {
     const history = useHistory();
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         async function getUser() {
@@ -24,9 +24,7 @@ function App() {
                 const res = await api.get('/user');
 
                 if (res.data.email !== undefined) {
-                    history.push('/books');
-                } else {
-                    history.push('/');
+                    setUser(res.data);
                 }
             } catch (err) {
                 
@@ -43,12 +41,13 @@ function App() {
                     <Route exact path="/">
                         <Login />
                     </Route>
-                    <Route path="/login">
+                    {user !== null ? (
+                        <Route path="/books">
+                            <Books />
+                        </Route>
+                    ):(
                         <Login />
-                    </Route>
-                    <Route path="/books">
-                        <Books />
-                    </Route>
+                    )}
                 </Switch>
             </div>
         </Router>
