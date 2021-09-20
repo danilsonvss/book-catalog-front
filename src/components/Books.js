@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Container, Button, Col, Card, Navbar, Nav, ButtonGroup, Row, FormControl, InputGroup } from 'react-bootstrap';
+import { Container, Button, Col, Card, Navbar, Nav, ButtonGroup, Row, FormControl, InputGroup, Spinner } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import api from '../api';
 import { getUrlParam } from '../utils';
@@ -95,9 +95,11 @@ function BookList() {
     const [nextPageUrl, setNextPageUrl] = useState(null);
     const [params, setParams] = useState(false);
     const [filter, setFilter] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const getBookList = useCallback(async () => {
         try {
+            setIsLoading(true);
             const res = await api.get('/books', {
                 params
             });
@@ -121,6 +123,8 @@ function BookList() {
             }
         } catch (err) {
             Swal.fire(err, '', 'error');
+        } finally {
+            setIsLoading(false);
         }
     }, [params]);
 
@@ -303,13 +307,19 @@ function BookList() {
                 <Row>
                     <Col sm={8} md={6} lg={4} className="m-auto">
                         <div className="text-white text-center p-3">
-                            <div className="display-1">
-                                <FontAwesomeIcon icon={faBookOpen} />
-                            </div>
-                            <div className="p-3">Nenhum livro encontrado.</div>
-                            <Button variant="primary"
-                                className="p-3 w-100"
-                                onClick={() => history.push("/books/new")}>Cadastrar um livro</Button>
+                            {isLoading ? (
+                                <Spinner animation="border" variant="primary" />
+                            ) : (
+                                <React.Fragment>
+                                    <div className="display-1">
+                                        <FontAwesomeIcon icon={faBookOpen} />
+                                    </div>
+                                    <div className="p-3">Nenhum livro encontrado.</div>
+                                    <Button variant="primary"
+                                        className="p-3 w-100"
+                                        onClick={() => history.push("/books/new")}>Cadastrar um livro</Button>
+                                </React.Fragment>
+                            )}
                         </div>
                     </Col>
                 </Row>
