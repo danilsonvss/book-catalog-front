@@ -4,7 +4,7 @@
 
 Para que a aplicação funcione da forma correta, informe a url base para a API adicionando ao .env.
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 
 ```
 
