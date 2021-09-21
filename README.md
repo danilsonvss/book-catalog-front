@@ -8,7 +8,7 @@ cp .env.example .env
 
 ```
 
-Exemplo de configuração do `.env`:
+Exemplo de configuração do `.env.local`:
 ```
 REACT_APP_BASE_URL=http://localhost/api
 
